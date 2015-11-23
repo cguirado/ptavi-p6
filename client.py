@@ -12,8 +12,14 @@ import sys
 # Dirección IP del servidor.
 SERVER = 'localhost'
 PORT = 6001
-Metodo = sys.arg[1]
-Direccion = sys.arg[2]
+Metodo = sys.argv[1]
+Direccion = sys.argv[2]
+
+Separar = Direccion.split(":")
+Login = Separar[0]
+Puerto = Separar[1]
+print(Login)
+print(Puerto)
 # Contenido que vamos a enviar
 LINE = '¡Hola mundo!'
 
@@ -23,10 +29,10 @@ my_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 my_socket.connect((SERVER, PORT))
 
 #Contenido que enviamos
-if not len(sys.argv) != 3
+if not len(sys.argv) != 2:
     sys.exit("Usage: python client.py method receiver@IP:SIPport")
 if Metodo == "INVITE":
-
+    USER = Direccion
 print("Enviando: " + LINE)
 my_socket.send(bytes(LINE, 'utf-8') + b'\r\n')
 data = my_socket.recv(1024)
