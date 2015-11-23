@@ -6,6 +6,7 @@ Clase (y programa principal) para un servidor de eco en UDP simple
 
 import socketserver
 import sys
+import os
 
 
 class EchoHandler(socketserver.DatagramRequestHandler):
@@ -17,6 +18,7 @@ class EchoHandler(socketserver.DatagramRequestHandler):
         # Escribe dirección y puerto del cliente (de tupla client_address)
         IP = self.client_address[0]
         PORT = self.client_address[1]
+        print(self.client_address)
         print("IP: ", IP)
         print("Puerto: ", PORT)
 
@@ -33,7 +35,15 @@ class EchoHandler(socketserver.DatagramRequestHandler):
                 self.wfile.write(b"SIP/2.0 100 Trying"+b"\r\n"+b"\r\n")
                 self.wfile.write(b"SIP/2.0 180 Ring"+b"\r\n"+b"\r\n")
                 self.wfile.write(b"SIP/2.0 200 OK"+b"\r\n"+b"\r\n")
-
+            elif metodo == "BYE":
+                self.wfile.write(b"SIP/2.0 200 OK"+b"\r\n"+b"\r\n")
+            elif metodo == "ACK":
+                Ejecutar = "./mp32rtp -i " + IP + " -p " + str(PORT) + " <" + sys.argv[3]
+                os.system (Ejecutar)
+            elif metodo not in ["INVITE","BYE","ACK"]:
+                self.wfile.write(b"SIP/2.0 405 Not Allowed"+b"\r\n"+b"\r\n")
+            else:
+                self.wfile.write(b"SIP/2.0 400 Bad Request"+b"\r\n"+b"\r\n")
             # Si no hay más líneas salimos del bucle infinito
 
 
