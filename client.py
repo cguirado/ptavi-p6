@@ -40,8 +40,8 @@ data = my_socket.recv(1024)
 
 print('Recibido -- ', data.decode('utf-8'))
 Recibido = data.decode('utf-8')
-print(Recibido[1],Recibido[4],Recibido[7])
-if Recibido[1] == "100" and Recibido[4] == "180" and Recibido[7] == "200":
+Part_Recb = Recibido.split()
+if Part_Recb[1] == "100" and Part_Recb[4] == "180" and Part_Recb[7] == "200":
     LINE = ("ACK sip:" + Login + "@" + IP + " SIP/2.0")
     my_socket.send(bytes(LINE, 'utf-8') + b'\r\n')
 print("Terminando socket...")
