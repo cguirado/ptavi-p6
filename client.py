@@ -31,9 +31,9 @@ my_socket.connect((SERVER, PORT))
 #Contenido que enviamos
 
 if Metodo == "INVITE":
-    LINE = ("INVITE sip:" + Login + "@" + IP +" SIP/2.0")
+    LINE = ("INVITE sip:" + Login + "@" + IP +" SIP/2.0" + "\r\n" )
 if Metodo == "BYE":
-    LINE = ("BYE sip:" + Login + "@" + IP + " SIP/2.0")
+    LINE = ("BYE sip:" + Login + "@" + IP + " SIP/2.0" + "\r\n")
 print("Enviando: " + LINE)
 my_socket.send(bytes(LINE, 'utf-8') + b'\r\n')
 data = my_socket.recv(1024)
@@ -42,7 +42,7 @@ print('Recibido -- ', data.decode('utf-8'))
 Recibido = data.decode('utf-8')
 Part_Recb = Recibido.split()
 if Part_Recb[1] == "100" and Part_Recb[4] == "180" and Part_Recb[7] == "200":
-    LINE = ("ACK sip:" + Login + "@" + IP + " SIP/2.0")
+    LINE = ("ACK sip:" + Login + "@" + IP + " SIP/2.0" + "\r\n")
     my_socket.send(bytes(LINE, 'utf-8') + b'\r\n')
 print("Terminando socket...")
 
