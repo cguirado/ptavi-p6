@@ -18,7 +18,6 @@ class EchoHandler(socketserver.DatagramRequestHandler):
         # Escribe dirección y puerto del cliente (de tupla client_address)
         IP = self.client_address[0]
         PORT = self.client_address[1]
-        print(self.client_address)
         print("IP: ", IP)
         print("Puerto: ", PORT)
 
