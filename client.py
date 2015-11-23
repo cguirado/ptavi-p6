@@ -31,7 +31,7 @@ my_socket.connect((SERVER, PORT))
 #Contenido que enviamos
 
 if Metodo == "INVITE":
-    LINE = ("INVITE sip:" + Login + "@" + IP +" SIP/2.0" + "\r\n" )
+    LINE = ("INVITE sip:" + Login + "@" + IP + " SIP/2.0" + "\r\n")
 if Metodo == "BYE":
     LINE = ("BYE sip:" + Login + "@" + IP + " SIP/2.0" + "\r\n")
 print("Enviando: " + LINE)
