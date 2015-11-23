@@ -5,6 +5,7 @@ Clase (y programa principal) para un servidor de eco en UDP simple
 """
 
 import socketserver
+import sys
 
 
 class EchoHandler(socketserver.DatagramRequestHandler):
@@ -14,18 +15,34 @@ class EchoHandler(socketserver.DatagramRequestHandler):
 
     def handle(self):
         # Escribe dirección y puerto del cliente (de tupla client_address)
-        self.wfile.write(b"Hemos recibido tu peticion")
+        IP = self.client_address[0]
+        PORT = self.client_address[1]
+        print("IP: ", IP)
+        print("Puerto: ", PORT)
+
         while 1:
+
             # Leyendo línea a línea lo que nos envía el cliente
-            line = self.rfile.read()
-            print("El cliente nos manda " + line.decode('utf-8'))
+            lineb = self.rfile.read()
+            if not lineb:
+                break
+            print("El cliente nos manda " + lineb.decode('utf-8'))
+            line = lineb.decode('utf-8')
+            (metodo,direccion, elresto)= line.split()
+            if metodo == "INVITE":
+                self.wfile.write(b"SIP/2.0 100 Trying"+b"\r\n"+b"\r\n")
+                self.wfile.write(b"SIP/2.0 180 Ring"+b"\r\n"+b"\r\n")
+                self.wfile.write(b"SIP/2.0 200 OK"+b"\r\n"+b"\r\n")
 
             # Si no hay más líneas salimos del bucle infinito
-            if not line:
-                break
+
+
 
 if __name__ == "__main__":
     # Creamos servidor de eco y escuchamos
-    serv = socketserver.UDPServer(('', 6001), EchoHandler)
+    PORT = int(sys.argv[2])
+    IP = sys.argv[1]
+    Fichero = sys.argv[3]
+    serv = socketserver.UDPServer((IP, int(PORT)), EchoHandler)
     print("Lanzando servidor UDP de eco...")
     serv.serve_forever()
