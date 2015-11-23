@@ -5,13 +5,15 @@ Programa cliente que abre un socket a un servidor
 """
 
 import socket
+import sys
 
 # Cliente UDP simple.
 
 # Dirección IP del servidor.
 SERVER = 'localhost'
 PORT = 6001
-
+Metodo = sys.arg[1]
+Direccion = sys.arg[2]
 # Contenido que vamos a enviar
 LINE = '¡Hola mundo!'
 
@@ -19,6 +21,11 @@ LINE = '¡Hola mundo!'
 my_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 my_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 my_socket.connect((SERVER, PORT))
+
+#Contenido que enviamos
+if not len(sys.argv) != 3
+    sys.exit("Usage: python client.py method receiver@IP:SIPport")
+if Metodo == "INVITE":
 
 print("Enviando: " + LINE)
 my_socket.send(bytes(LINE, 'utf-8') + b'\r\n')
