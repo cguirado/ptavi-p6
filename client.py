@@ -34,6 +34,9 @@ if Metodo == "INVITE":
     LINE = ("INVITE sip:" + Login + "@" + IP + " SIP/2.0" + "\r\n")
 if Metodo == "BYE":
     LINE = ("BYE sip:" + Login + "@" + IP + " SIP/2.0" + "\r\n")
+if Metodo not in ["INVITE", "BYE"]:
+    sys.exit("SIP/2.0 405 Method Not Allowed ")
+
 print("Enviando: " + LINE)
 my_socket.send(bytes(LINE, 'utf-8') + b'\r\n')
 data = my_socket.recv(1024)
