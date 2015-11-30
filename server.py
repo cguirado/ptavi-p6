@@ -39,7 +39,8 @@ class EchoHandler(socketserver.DatagramRequestHandler):
                 Ejecutar = "./mp32rtp -i " + IP + " -p 23032 <" + sys.argv[3]
                 os.system(Ejecutar)
             elif metodo not in ["INVITE", "BYE", "ACK"]:
-                self.wfile.write(b"SIP/2.0 405 Method Not Allowed"+b"\r\n"+b"\r\n")
+                self.wfile.write(b"SIP/2.0 405 Method Not Allowed" +
+                                 b"\r\n"+b"\r\n")
             else:
                 self.wfile.write(b"SIP/2.0 400 Bad Request"+b"\r\n"+b"\r\n")
             # Si no hay más líneas salimos del bucle infinito
